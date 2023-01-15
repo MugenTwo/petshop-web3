@@ -1,0 +1,45 @@
+version: '3.6'
+services:
+  petshop-db:
+    image: mongo
+    container_name: petshop-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=petshop-db
+      - MONGO_INITDB_USER=owner
+      - MONGO_INITDB_PWD=owner
+    volumes:
+      - './petshop-db/.data/petshop:/data/db'
+      - './petshop-db/.data/initdb.d/:/docker-entrypoint-initdb.d/'
+    networks:
+      - petshop
+  # TODO: John for some reason compileSolidity task is not working properly (I think it might have something to do with the warnings)
+  # petshop-server:
+  #   container_name: petshop-server
+  #   build:
+  #     dockerfile: ./petshop-server/Dockerfile
+  #     context: ./
+  #   ports:
+  #     - '8080:8080'
+  #   environment:
+  #     - DB_HOST=petshop-db
+  #     - WEB3_CLIENT_HOST=member1
+  #   healthcheck:
+  #     test: 'curl --fail --silent localhost:8080/actuator/health || exit 1'
+  #     interval: 5s
+  #     timeout: 10s
+  #     retries: 5
+  #   depends_on:
+  #     - petshop-db
+  #   networks:
+  #     - petshop
+  #     - quorum-network
+networks:
+  petshop:
+    driver: bridge
+  quorum-network:
+    external: true
