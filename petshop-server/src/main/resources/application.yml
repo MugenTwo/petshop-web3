@@ -1,0 +1,36 @@
+web3j:
+  client-address: http://${WEB3_CLIENT_HOST:localhost}:8545
+
+spring:
+  application:
+    name: petshop-server
+  profiles:
+    active: ${PROFILE:local}
+#  mongodb:
+#    uri: mongodb://owner:owner@localhost:27017/petshop-db?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1
+#    host: ${DB_HOST:localhost}
+#    port: ${DB_PORT:27017}
+#    database: ${DB_NAME:petshop-db}
+#    username: ${DB_USERNAME:owner}
+#    password: ${DB_PASSWORD:owner}
+
+management:
+  endpoint:
+    health:
+      enabled: true
+
+springdoc:
+  api-docs:
+    path: /docs/api-docs
+  swagger-ui:
+    path: /docs/api-docs-ui
+
+x:
+  account-keys:
+    system: 8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63
+  web3j:
+    client-address: ${WEB3_CLIENT_PROTO:http}://${WEB3_CLIENT_HOST:localhost}:${WEB3_CLIENT_PORT:8545}
+  chain-id: ${CHAIN_ID:1337}
+  mongo:
+    uri: mongodb://owner:owner@localhost:27017/petshop-db
+    db: petshop-db
